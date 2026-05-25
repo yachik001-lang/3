@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Практика 3: Форма + тема</title>
+    <style>
+        /* светлая тема */
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 500px;
+            margin: 30px auto;
+            padding: 20px;
+            background: #f4f4f4;
+            color: #333;
+            transition: background 0.3s, color 0.3s;
+        }
+        .form-box {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 4px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            margin-top: 15px;
+            padding: 10px;
+            background: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover { background: #0056b3; }
+        .user-data {
+            background: #fff;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 4px solid #28a745;
+            border-radius: 4px;
+        }
+
+        /* Темная тема */
+        body.dark {
+            background: #1a1a2e;
+            color: #eee;
+        }
+        body.dark .form-box,
+        body.dark .user-data {
+            background: #16213e;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+        body.dark input {
+            background: #0f3460;
+            border-color: #0f3460;
+            color: #eee;
+        }
+        body.dark button {
+            background: #e94560;
+        }
+        body.dark button:hover {
+            background: #c73e54;
+        }
+        
+        /* кнопка темы */
+        #themeToggle {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            width: auto;
+            padding: 8px 12px;
+            background: #6c757d;
+            font-size: 14px;
+        }
+        #themeToggle:hover { background: #5a6268; }
+    </style>
+</head>
+<body>
+
+    <!-- переключения темы -->
+    <button id="themeToggle">Тёмная тема</button>
+
+    <h2>Форма ввода данных</h2>
+    <div class="form-box">
+        <form id="myForm">
+            <label>Фамилия: <input type="text" id="surname" required></label>
+            <label>Имя: <input type="text" id="name" required></label>
+            <label>Email: <input type="email" id="email" required></label>
+            <label>Телефон: <input type="tel" id="phone" required></label>
+            <button type="submit">Отправить</button>
+        </form>
+    </div>
+
+    <div id="results"></div>
+
+    <script>
+        //Тема
+        const themeBtn = document.getElementById('themeToggle');
+        themeBtn.addEventListener('click', function() {
+            document.body.classList.toggle('dark');
+            // текст кнопки
+            this.textContent = document.body.classList.contains('dark') 
+                ? 'Светлая тема' 
+                : 'Темная тема';
+        });
+
+        document.getElementById('myForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const surname = document.getElementById('surname').value.trim();
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+
+            console.log('ФИО:', surname, name);
+            console.log('Email:', email);
+            console.log('Телефон:', phone);
+
+            const outputDiv = document.createElement('div');
+            outputDiv.className = 'user-data';
+            outputDiv.innerHTML = `
+                <p><strong>ФИО пользователя:</strong> ${surname} ${name}</p>
+                <p><strong>Электронная почта:</strong> ${email}</p>
+                <p><strong>Телефон:</strong> ${phone}</p>
+            `;
+
+            document.getElementById('results').appendChild(outputDiv);
+            this.reset();
+        });
+    </script>
+
+</body>
+</html>
